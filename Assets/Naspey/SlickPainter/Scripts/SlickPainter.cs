@@ -7,7 +7,7 @@ using Naspey.SlickPainter.Blending;
 namespace Naspey.SlickPainter
 {
     /// <summary>
-    /// Main component of LogoMaker. Handles input and events.
+    /// Main component of the painter. Handles input and events.
     /// </summary>
     [RequireComponent(typeof(RawImage))]
     public class SlickPainter : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler

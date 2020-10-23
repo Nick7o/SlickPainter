@@ -3,7 +3,7 @@
 namespace Naspey.SlickPainter
 {
     /// <summary>
-    /// Class describing Logo Maker's brush.
+    /// Class describing brush.
     /// </summary>
     [System.Serializable]
     public abstract class SPBrush
