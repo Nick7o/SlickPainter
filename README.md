@@ -1,8 +1,7 @@
 # Logo Maker
 **Version: 0.1.0**
 
-Logo Maker is a tool for runtime drawing in Unity written in C#.
-It is meant to be used as a simple painter.
+Logo Maker is a tool for runtime drawing in Unity, written in C#.
 
 #### Main features:
  - drawing and erasing using brushes
