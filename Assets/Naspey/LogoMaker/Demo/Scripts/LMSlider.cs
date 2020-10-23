@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using Naspey.LogoMaker;
-using TMPro;
 
 public class LMSlider : LMBaseComponent
 {
@@ -13,7 +11,7 @@ public class LMSlider : LMBaseComponent
 
     [Space]
     [SerializeField] Slider slider;
-    [SerializeField] TMP_Text infoLabel;
+    [SerializeField] Text infoLabel;
 
     private void Start()
     {
