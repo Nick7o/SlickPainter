@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Naspey.LogoMaker
+namespace Naspey.SlickPainter
 {
     public static class TextureUtilities
     {

@@ -2,15 +2,15 @@
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-using Naspey.LogoMaker.Blending;
+using Naspey.SlickPainter.Blending;
 
-namespace Naspey.LogoMaker
+namespace Naspey.SlickPainter
 {
     /// <summary>
     /// Main component of LogoMaker. Handles input and events.
     /// </summary>
     [RequireComponent(typeof(RawImage))]
-    public class LogoMaker : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+    public class SlickPainter : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         /// <summary>
         /// Implementation of texture scaling algorithm.
@@ -31,7 +31,7 @@ namespace Naspey.LogoMaker
         public bool UseAlphaChannel { get => useAlphaChannel; set => useAlphaChannel = value; }
 
         [Space]
-        [SerializeField] LMBrush brush = new CircleBrush();
+        [SerializeField] SPBrush brush = new CircleBrush();
         [SerializeField] Color brushColor = Color.black;
 
         [Header("Eraser")]
@@ -55,11 +55,11 @@ namespace Naspey.LogoMaker
         Vector2 canvasMousePosition;
 
         // Events
-        public event System.Action<LMBrush> BrushChangedEvent;
+        public event System.Action<SPBrush> BrushChangedEvent;
         public event System.Action<Color> ColorChangedEvent;
 
         #region Properties
-        public LMBrush Brush
+        public SPBrush Brush
         {
             get => brush;
             set

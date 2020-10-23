@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Naspey.LogoMaker
+namespace Naspey.SlickPainter
 {
-    public class StampBrush : LMBrush
+    public class StampBrush : SPBrush
     {
         [SerializeField] Sprite stamp;
         public Sprite Stamp
@@ -29,7 +29,7 @@ namespace Naspey.LogoMaker
             if (stamp != null)
             {
                 var texCopy = TextureUtilities.CopyNotReadableTex(stamp.texture);
-                cachedBrushTexture = TextureUtilities.Scale(LogoMaker.TextureScaler, texCopy, Size, Size);
+                cachedBrushTexture = TextureUtilities.Scale(SlickPainter.TextureScaler, texCopy, Size, Size);
                 Object.Destroy(texCopy);
             }
         }

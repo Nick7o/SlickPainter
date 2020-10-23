@@ -1302,7 +1302,7 @@ GameObject:
   - component: {fileID: 274777748}
   - component: {fileID: 274777749}
   m_Layer: 5
-  m_Name: Demo LM Options
+  m_Name: Demo Painter Options
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3424,7 +3424,7 @@ GameObject:
   - component: {fileID: 905581447}
   - component: {fileID: 905581448}
   m_Layer: 5
-  m_Name: LogoMaker Canvas
+  m_Name: SlickPainter Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4539,7 +4539,7 @@ GameObject:
   - component: {fileID: 1226316646}
   - component: {fileID: 1226316645}
   m_Layer: 5
-  m_Name: LogoMaker by Naspey
+  m_Name: SlickPainter by Naspey
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4596,7 +4596,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: LogoMaker by Naspey
+  m_Text: SlickPainter by Naspey
 --- !u!222 &1226316646
 CanvasRenderer:
   m_ObjectHideFlags: 0

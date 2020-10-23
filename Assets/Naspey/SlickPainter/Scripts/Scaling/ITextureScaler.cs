@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Naspey.LogoMaker
+namespace Naspey.SlickPainter
 {
     public interface ITextureScaler
     {

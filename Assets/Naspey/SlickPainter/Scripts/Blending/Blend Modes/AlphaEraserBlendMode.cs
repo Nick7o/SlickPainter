@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Naspey.LogoMaker.Blending
+namespace Naspey.SlickPainter.Blending
 {
     /// <summary>
     /// Blends alphas of color a and b. Meant to be used as a eraser for alpha backgrounds.

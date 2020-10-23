@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
-using Naspey.LogoMaker.Blending;
+using Naspey.SlickPainter.Blending;
 
-namespace Naspey.LogoMaker
+namespace Naspey.SlickPainter
 {
-    public static class LogoMakerUtilities
+    public static class SlickPainterUtilities
     {
         public static void Blend(this Texture2D sourceTex, Color[] brushPixels, BrushRect rect, BlendModes blendMode = BlendModes.Normal)
         {

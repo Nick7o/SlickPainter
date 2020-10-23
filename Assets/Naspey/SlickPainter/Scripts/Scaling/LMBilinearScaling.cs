@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Naspey.LogoMaker
+namespace Naspey.SlickPainter
 {
     public class LMBilinearScaling : ITextureScaler
     {

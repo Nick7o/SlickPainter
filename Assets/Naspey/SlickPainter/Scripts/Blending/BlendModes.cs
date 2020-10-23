@@ -1,4 +1,4 @@
-﻿namespace Naspey.LogoMaker.Blending
+﻿namespace Naspey.SlickPainter.Blending
 {
     public enum BlendModes
     {

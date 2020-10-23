@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Naspey.LogoMaker.Blending
+namespace Naspey.SlickPainter.Blending
 {
     public interface IBlendPixel
     {

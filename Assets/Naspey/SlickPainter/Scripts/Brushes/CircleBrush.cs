@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Naspey.LogoMaker
+namespace Naspey.SlickPainter
 {
-    public class CircleBrush : LMBrush
+    public class CircleBrush : SPBrush
     {
         public CircleBrush() { }
         public CircleBrush(int size, float hardness) : base(size, hardness) { }

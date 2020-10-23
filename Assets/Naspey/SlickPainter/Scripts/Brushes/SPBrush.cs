@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 
-namespace Naspey.LogoMaker
+namespace Naspey.SlickPainter
 {
     /// <summary>
     /// Class describing Logo Maker's brush.
     /// </summary>
     [System.Serializable]
-    public abstract class LMBrush
+    public abstract class SPBrush
     {
         [SerializeField] int size = 16;
         public int Size
@@ -36,9 +36,9 @@ namespace Naspey.LogoMaker
 
         protected Texture2D cachedBrushTexture = null;
 
-        public LMBrush() { }
+        public SPBrush() { }
 
-        public LMBrush(int size, float hardness)
+        public SPBrush(int size, float hardness)
         {
             this.size = size;
             this.hardness = hardness;

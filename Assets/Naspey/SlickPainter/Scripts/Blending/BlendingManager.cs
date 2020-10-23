@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Naspey.LogoMaker.Blending
+namespace Naspey.SlickPainter.Blending
 {
     public static class BlendingManager
     {
