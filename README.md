@@ -5,13 +5,11 @@ Slick Painter is a tool for runtime drawing in Unity, written in C#.
 
 #### Main features:
  - drawing and erasing using brushes
+   - circular brush with hardness property
+   - stamp brush
  - support for alpha and non-alpha backgrounds
- - circular brush with hardness property
- - stamp brush
- - bilinear scaling
- - low memory usage
- - support for different aspect ratios
- - easily extendable brushes, blend modes and scaling implementations
+ - bilinear image scaling
+ - easily extendable brushes, blend modes and image scaling implementations
 
 ### Roadmap:
  - undo/redo
