@@ -1,5 +1,5 @@
 # Slick Painter
-**Version: 0.1.0**
+**Version: 0.2.0** [[CHANGELOG]](https://github.com/Naspey/SlickPainter/blob/main/CHANGELOG.md "Changelog")
 
 Slick Painter is a tool for runtime drawing in Unity, written in C#.
 
@@ -10,11 +10,13 @@ Slick Painter is a tool for runtime drawing in Unity, written in C#.
  - support for alpha and non-alpha backgrounds
  - bilinear image scaling
  - easily extendable brushes, blend modes and image scaling implementations
+ - undo/redo support
 
 ### Roadmap:
- - undo/redo
+ - ~~undo/redo~~ **[added in 0.2.0]**
  - support for layers (mainly for different blend modes, moving, scaling etc.)
  - mouse path drawing interpolation (drawing brushes in places where mouse wasn't in provided frame, especially useful for low framerates)
+ - move to Unity's new input system
  - text support
 
 # How to install

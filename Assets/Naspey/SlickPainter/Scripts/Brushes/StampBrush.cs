@@ -29,7 +29,7 @@ namespace Naspey.SlickPainter
             if (stamp != null)
             {
                 var texCopy = TextureUtilities.CopyNotReadableTex(stamp.texture);
-                cachedBrushTexture = TextureUtilities.Scale(SlickPainter.TextureScaler, texCopy, Size, Size);
+                cachedBrushTexture = SlickPainter.TextureScaler.Scale(texCopy, Size, Size);
                 Object.Destroy(texCopy);
             }
         }

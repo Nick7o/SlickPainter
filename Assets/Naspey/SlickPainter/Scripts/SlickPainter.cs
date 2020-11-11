@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 using Naspey.SlickPainter.Blending;
+using Naspey.SlickPainter.UndoRedo;
 
 namespace Naspey.SlickPainter
 {
@@ -18,11 +19,9 @@ namespace Naspey.SlickPainter
         public static ITextureScaler TextureScaler { get; set; } = new LMBilinearScaling();
 
         [Header("General")]
-        // Canvas size
         [SerializeField] Vector2Int canvasSize = new Vector2Int(128, 128);
         public Vector2Int CanvasSize => canvasSize;
 
-        // Background color
         [SerializeField] Color backgroundColor = Color.white;
         public Color BackgroundColor { get => backgroundColor; set => backgroundColor = value; }
 
@@ -42,6 +41,18 @@ namespace Naspey.SlickPainter
         [SerializeField] BlendModes blendMode = BlendModes.Normal;
         /// <summary> Current blend mode in use. </summary>
         public BlendModes BlendMode { get => IsErasing && useAlphaChannel ? BlendModes.Eraser : blendMode; set => blendMode = value; }
+
+        [Header("Undo/Redo")]
+        [SerializeField] int maxHistoryDepth = 15;
+        public int MaxHistoryDepth => maxHistoryDepth;
+
+        // Key mapping for undo/redo
+        public bool UseUndoRedoCommonKey => UndoRedoCommonKey != KeyCode.None;
+        public KeyCode UndoRedoCommonKey = KeyCode.LeftControl;
+        public KeyCode UndoKey = KeyCode.Z;
+        public KeyCode RedoKey = KeyCode.Y;
+
+        public IUndoRedo UndoRedo { get; private set; }
 
         // ________ PRIVATE MEMBERS ________
         // Unity components used for displaying textures
@@ -106,6 +117,11 @@ namespace Naspey.SlickPainter
         public Texture2D Result => canvasTex;
         #endregion
 
+        private void Awake()
+        {
+            UndoRedo = new BasicUndoRedo(this, MaxHistoryDepth);
+        }
+
         private void Start()
         {
             canvasImage = GetComponent<RawImage>();
@@ -127,6 +143,7 @@ namespace Naspey.SlickPainter
             Clear();
         }
 
+        int paintFramesCount = 0;
         private void Update()
         {
             if (isMouseOverCanvas)
@@ -139,11 +156,26 @@ namespace Naspey.SlickPainter
                 if (deltaMouseDistance > Mathf.Epsilon || Input.GetKeyDown(KeyCode.Mouse0))
                 {
                     if (Input.GetKey(KeyCode.Mouse0))
+                    {
+                        if (paintFramesCount == 0)
+                            UndoRedo.RegisterState();
+
                         Paint(GetBrushRect());
+                        paintFramesCount++;
+                    }
 
                     DrawBrushPreview();
                 }
             }
+
+            if (Input.GetKeyUp(KeyCode.Mouse0))
+                paintFramesCount = 0;
+
+            if (Input.GetKeyDown(UndoKey) && (!UseUndoRedoCommonKey || Input.GetKey(UndoRedoCommonKey)))
+                UndoRedo.Undo();
+
+            if (Input.GetKeyDown(RedoKey) && (!UseUndoRedoCommonKey || Input.GetKey(UndoRedoCommonKey)))
+                UndoRedo.Redo();
         }
 
         #region Mouse Detection
@@ -250,10 +282,10 @@ namespace Naspey.SlickPainter
             canvasSize = size;
             
             if(canvasTex != null)
-                TextureUtilities.Scale(TextureScaler, canvasTex, size.x, size.y);
+                TextureScaler.Scale(canvasTex, size.x, size.y);
 
-            if(brushCanvasTex != null)
-                TextureUtilities.Scale(TextureScaler, brushCanvasTex, size.x, size.y);
+            if (brushCanvasTex != null)
+                TextureScaler.Scale(brushCanvasTex, size.x, size.y);
         }
 
         /// <summary>

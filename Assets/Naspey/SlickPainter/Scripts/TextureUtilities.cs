@@ -39,8 +39,20 @@ namespace Naspey.SlickPainter
         /// <summary>
         /// Copies texture data from source to the destination. Both must have the same dimensions and format.
         /// </summary>
-        public static void CopyTexture(Texture2D source, Texture2D destination)
+        public static void CopyTexture(Texture2D source, Texture2D destination, bool allowOverridingDestinationTex = false)
         {
+            if (!CompareSizeAndFormat(source, destination))
+            {
+                if (allowOverridingDestinationTex)
+                {
+                    if(destination != null)
+                        destination.Resize(source.width, source.height, source.format, source.mipmapCount > 0);
+                }
+                else
+                    throw new UnityException("Couldn't override the destination texture to match the source texture. " +
+                        "Change allowOverridingDestinationTex parameter to allow this operation.");
+            }
+
             if (SystemInfo.copyTextureSupport == UnityEngine.Rendering.CopyTextureSupport.None)
             {
                 // Fall back for devices that doesn't support Graphics.CopyTexture()
@@ -50,6 +62,16 @@ namespace Naspey.SlickPainter
             }
             else
                 Graphics.CopyTexture(source, 0, 0, destination, 0, 0);
+        }
+
+        /// <summary>
+        /// Copies texture data to a new texture.
+        /// </summary>
+        public static Texture2D CopyTexture(Texture2D source)
+        {
+            Texture2D result = new Texture2D(source.width, source.height, source.format, source.mipmapCount > 0);
+            CopyTexture(source, result);
+            return result;
         }
 
         /// <summary>
@@ -65,7 +87,7 @@ namespace Naspey.SlickPainter
                 destination = _tempTextures[tempTextureName];
             }
 
-            // Destroying object from memory if it needs no longer needed
+            // Destroying object from memory if it's no longer needed
             if(destination != null && !CompareSizeAndFormat(destination, width, height, format))
                 Object.Destroy(destination);
 
@@ -88,15 +110,6 @@ namespace Naspey.SlickPainter
             destination.Apply();
 
             return destination;
-        }
-
-        /// <summary>
-        /// Scales texture using provided scaling algorithm implementation.
-        /// </summary>
-        /// <returns>Scaled texture.</returns>
-        public static Texture2D Scale(ITextureScaler scaler, Texture2D texture, int newWidth, int newHeight)
-        {
-            return scaler.Scale(texture, newWidth, newHeight);
         }
 
         /// <summary>
@@ -126,7 +139,21 @@ namespace Naspey.SlickPainter
         /// </summary>
         public static bool CompareSizeAndFormat(Texture2D src, int width, int height, TextureFormat format)
         {
-            return width != src.width || height != src.height || format != src.format;
+            if (src == null)
+                return false;
+
+            return width == src.width && height == src.height && format == src.format;
+        }
+
+        /// <summary>
+        /// Checks if the texture has the same size and format.
+        /// </summary>
+        public static bool CompareSizeAndFormat(Texture2D a, Texture2D b)
+        {
+            if (a == null || b == null)
+                return false;
+
+            return CompareSizeAndFormat(a, b.width, b.height, b.format);
         }
     }
 }
