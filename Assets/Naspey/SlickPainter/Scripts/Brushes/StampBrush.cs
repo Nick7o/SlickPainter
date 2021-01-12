@@ -6,30 +6,32 @@ namespace Naspey.SlickPainter
 {
     public class StampBrush : SPBrush
     {
-        [SerializeField] Sprite stamp;
+        [SerializeField]
+        private Sprite _stamp;
+
         public Sprite Stamp
         {
-            get => stamp;
+            get => _stamp;
             set
             {
-                if (stamp != value)
-                    cachedBrushTexture = null;
+                if (_stamp != value)
+                    _cachedBrushTexture = null;
 
-                stamp = value;
+                _stamp = value;
             }
         }
 
         public StampBrush(int size, float hardness, Sprite stamp) : base(size, hardness)
         {
-            this.stamp = stamp;
+            _stamp = stamp;
         }
 
         protected override void CreateBrushTextureCached()
         {
-            if (stamp != null)
+            if (_stamp != null)
             {
-                var texCopy = TextureUtilities.CopyNotReadableTex(stamp.texture);
-                cachedBrushTexture = SlickPainter.TextureScaler.Scale(texCopy, Size, Size);
+                var texCopy = TextureUtilities.CopyNotReadableTex(_stamp.texture);
+                _cachedBrushTexture = SlickPainter.TextureScaler.Scale(texCopy, Size, Size);
                 Object.Destroy(texCopy);
             }
         }

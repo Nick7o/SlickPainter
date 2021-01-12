@@ -113,7 +113,7 @@ namespace Naspey.SlickPainter
         }
 
         /// <summary>
-        /// This method can copy textures marked as not readable in the import settings.
+        /// Copies texture, even if it is marked as not readable in the import settings.
         /// </summary>
         public static Texture2D CopyNotReadableTex(Texture2D sourceTexture)
         {

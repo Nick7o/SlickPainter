@@ -11,16 +11,16 @@ namespace Naspey.SlickPainter.UndoRedo
 
         public int MaxHistoryDepth { get; set; }
 
-        private List<Texture2D> undoTextures { get; set; }
-        private List<Texture2D> redoTextures { get; set; }
+        private List<Texture2D> _undoTextures;
+        private List<Texture2D> _redoTextures;
 
         public BasicUndoRedo(SlickPainter painter, int maxHistoryDepth = 10)
         {
             Painter = painter;
             MaxHistoryDepth = maxHistoryDepth;
 
-            undoTextures = new List<Texture2D>(MaxHistoryDepth);
-            redoTextures = new List<Texture2D>(MaxHistoryDepth);
+            _undoTextures = new List<Texture2D>(MaxHistoryDepth);
+            _redoTextures = new List<Texture2D>(MaxHistoryDepth);
         }
 
         public void RegisterState()
@@ -28,25 +28,25 @@ namespace Naspey.SlickPainter.UndoRedo
             if (Painter == null)
                 return;
 
-            undoTextures.Insert(0, TextureUtilities.CopyTexture(Painter.Result));
+            _undoTextures.Insert(0, TextureUtilities.CopyTexture(Painter.CanvasTexture));
 
-            redoTextures.DestroyAll();
-            redoTextures.Clear();
+            _redoTextures.DestroyAll();
+            _redoTextures.Clear();
 
             CheckForMaxDepthExceed();
         }
 
-        public void Undo() => UpdateState(undoTextures, redoTextures);
+        public void Undo() => UpdateState(_undoTextures, _redoTextures);
 
-        public void Redo() => UpdateState(redoTextures, undoTextures);
+        public void Redo() => UpdateState(_redoTextures, _undoTextures);
 
         public void ClearHistory()
         {
-            undoTextures.DestroyAll();
-            undoTextures.Clear();
+            _undoTextures.DestroyAll();
+            _undoTextures.Clear();
 
-            redoTextures.DestroyAll();
-            redoTextures.Clear();
+            _redoTextures.DestroyAll();
+            _redoTextures.Clear();
         }
 
         private void UpdateState(List<Texture2D> source, List<Texture2D> copyHolder)
@@ -54,8 +54,8 @@ namespace Naspey.SlickPainter.UndoRedo
             if (source.Count == 0)
                 return;
 
-            copyHolder.Insert(0, TextureUtilities.CopyTexture(Painter.Result));
-            TextureUtilities.CopyTexture(source.First(), Painter.Result);
+            copyHolder.Insert(0, TextureUtilities.CopyTexture(Painter.CanvasTexture));
+            TextureUtilities.CopyTexture(source.First(), Painter.CanvasTexture);
 
             source.DestroyAndRemove(0);
 
@@ -64,8 +64,8 @@ namespace Naspey.SlickPainter.UndoRedo
 
         private void CheckForMaxDepthExceed()
         {
-            undoTextures.DestroyAndRemoveRange(MaxHistoryDepth, undoTextures.Count - MaxHistoryDepth);
-            redoTextures.DestroyAndRemoveRange(MaxHistoryDepth, redoTextures.Count - MaxHistoryDepth);
+            _undoTextures.DestroyAndRemoveRange(MaxHistoryDepth, _undoTextures.Count - MaxHistoryDepth);
+            _redoTextures.DestroyAndRemoveRange(MaxHistoryDepth, _redoTextures.Count - MaxHistoryDepth);
         }
     }
 }

@@ -3,46 +3,50 @@
 namespace Naspey.SlickPainter
 {
     /// <summary>
-    /// Class describing brush.
+    /// Base class describing a brush.
     /// </summary>
     [System.Serializable]
     public abstract class SPBrush
     {
-        [SerializeField] int size = 16;
+        [SerializeField]
+        protected int _size = 16;
+        
         public int Size
         {
-            get => size;
+            get => _size;
             set
             {
-                if (size != value)
-                    cachedBrushTexture = null;
+                if (_size != value)
+                    _cachedBrushTexture = null;
 
-                size = Mathf.Clamp(value, 0, 2048);
+                _size = Mathf.Clamp(value, 0, 2048);
             }
         }
 
-        [SerializeField, Range(1, 100)] float hardness = 10;
+        [SerializeField, Range(1, 100)]
+        protected float _hardness = 10;
+
         public float Hardness
         {
-            get => hardness;
+            get => _hardness;
             set
             {
-                if (!Mathf.Approximately(hardness, value))
-                    cachedBrushTexture = null;
+                if (!Mathf.Approximately(_hardness, value))
+                    _cachedBrushTexture = null;
 
-                hardness = Mathf.Clamp(value, 1, 100);
+                _hardness = Mathf.Clamp(value, 1, 100);
             }
         }
 
-        protected Texture2D cachedBrushTexture = null;
+        protected Texture2D _cachedBrushTexture = null;
 
         public SPBrush() { }
 
         public SPBrush(int size, float hardness)
         {
-            this.size = size;
-            this.hardness = hardness;
-            cachedBrushTexture = null;
+            _size = size;
+            _hardness = hardness;
+            _cachedBrushTexture = null;
         }
 
         /// <summary>
@@ -50,11 +54,11 @@ namespace Naspey.SlickPainter
         /// </summary>
         public Color[] GetPixels(BrushRect rect, Color color)
         {
-            if (cachedBrushTexture == null)
+            if (_cachedBrushTexture == null)
                 CreateBrushTextureCached();
 
             // Getting clipped pixels
-            var brushPixels = cachedBrushTexture.GetPixels(rect.BrushOffsetX, rect.BrushOffsetY, rect.Width, rect.Height);
+            var brushPixels = _cachedBrushTexture.GetPixels(rect.BrushOffsetX, rect.BrushOffsetY, rect.Width, rect.Height);
 
             ColorPixels(brushPixels, color);
 
@@ -62,7 +66,7 @@ namespace Naspey.SlickPainter
         }
 
         /// <summary>
-        /// Creates new brush texture for cachedBrushTexture field.
+        /// Creates new brush texture for cache.
         /// </summary>
         protected abstract void CreateBrushTextureCached();
 
@@ -80,14 +84,14 @@ namespace Naspey.SlickPainter
         /// </summary>
         protected void PrepareBrushCacheTexture()
         {
-            if (cachedBrushTexture != null && cachedBrushTexture.width == Size && cachedBrushTexture.height == Size &&
-                cachedBrushTexture.format == TextureFormat.RGBA32)
+            if (_cachedBrushTexture != null && _cachedBrushTexture.width == Size && _cachedBrushTexture.height == Size &&
+                _cachedBrushTexture.format == TextureFormat.RGBA32)
                 return;
 
-            if (cachedBrushTexture != null)
-                Object.Destroy(cachedBrushTexture);
+            if (_cachedBrushTexture != null)
+                Object.Destroy(_cachedBrushTexture);
 
-            cachedBrushTexture = new Texture2D(Size, Size, TextureFormat.RGBA32, false);
+            _cachedBrushTexture = new Texture2D(Size, Size, TextureFormat.RGBA32, false);
         }
     }
 }

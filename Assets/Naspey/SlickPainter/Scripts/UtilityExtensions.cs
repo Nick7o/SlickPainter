@@ -16,7 +16,7 @@ namespace Naspey.SlickPainter
         }
 
         /// <summary>
-        /// Deletes unity textures from the IList at provided index.
+        /// Deletes Unity textures from the IList at provided index.
         /// </summary>
         public static void DestroyAndRemove(this IList<Texture2D> list, int index)
         {
